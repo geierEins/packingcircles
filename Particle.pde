@@ -1,29 +1,35 @@
 class Particle {
 
-  PVector centerVector;
+  PVector centerVector, outterCircle;
   float pSize, radius, radiusMax, particleGrowthRate;
   int pColRed, pColGreen, pColBlue, alpha;
   int strokeColRed, strokeColGreen, strokeColBlue, strokeAlpha, strokeWeight;
   boolean isCollidedWithOtherParticle;
 
-  Particle(PVector centerVector) {
+  Particle(PVector centerVector, PVector outterCircle) {
+    this.outterCircle = outterCircle;
     this.centerVector = centerVector;
     this.pSize = 0;
     this.radius = pSize/2;
-    this.radiusMax=10;
+    this.radiusMax = random(200, 200);
     this.isCollidedWithOtherParticle = false;  
     this.particleGrowthRate = 0.1;
+    
     applyDefaultAppearanceProperties();
   }
 
   void applyDefaultAppearanceProperties() {
-    setColor(255, 255, 255);
+    /* FILL */
+    //setColor(255, 255, 255);
     //setColorRandom();
-    setAlpha(0);
-    //setStrokeColor(255, 255, 255);
-    setStrokeColorRandom();
-    setStrokeAlpha(200);
-    setStrokeWeight(2);
+    setColorGradient1();
+    setAlpha(200);
+    
+    /* STROKE */
+    setStrokeColor(255, 255, 255);
+    //setStrokeColorRandom();
+    setStrokeAlpha(0);
+    setStrokeWeight(3);
   }
 
   void runParticle() {
@@ -75,6 +81,13 @@ class Particle {
     this.pColRed = r;
     this.pColGreen = g;
     this.pColBlue = b;
+  }
+  
+  void setColorGradient1(){
+    pColRed = (int)map(this.centerVector.x-outterCircle.x, 0, width/2, 255, 0);
+    pColGreen = (int)map(this.centerVector.x-outterCircle.x, -width/2, 0, 0, 255);
+    pColBlue = (int)map(this.centerVector.y-outterCircle.y, -width/2, width/2, 255, 0);
+    
   }
 
   void setColorRandom() {

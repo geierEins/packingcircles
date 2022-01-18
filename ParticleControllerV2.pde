@@ -5,7 +5,7 @@ class ParticleController { //<>//
   int pCount, pSize;
   int outterCircleRadius;
 
-  ParticleController(int pCount) {
+  ParticleController() {
     outterCircle = new PVector(width/2, height/2);
     outterCircleRadius = (int)(width*0.45);
     // create particle arraylist to store particles
@@ -22,8 +22,7 @@ class ParticleController { //<>//
       if ((sq(nextCandidate.x-outterCircle.x)+sq(nextCandidate.y-outterCircle.y)) <= sq(outterCircleRadius)) {
         if (particles.size()==0) {
           foundCandidate = true; //<>//
-          particles.add(new Particle(nextCandidate));
-          i++;
+          particles.add(new Particle(nextCandidate, outterCircle));
         }
         if (foundCandidate) break;
 
@@ -32,8 +31,8 @@ class ParticleController { //<>//
           for (Particle pToCheck : particles) {
             if (sq(nextCandidate.x-pToCheck.centerVector.x)+sq(nextCandidate.y-pToCheck.centerVector.y) > sq(pToCheck.radius)) { //<>//
               foundCandidate = true;
-              particles.add(new Particle(nextCandidate));
-              i++;
+              particles.add(new Particle(nextCandidate, outterCircle));
+              println("added a new particle to particles. size is now: " + particles.size());
             }
             if (foundCandidate) break;
           }
