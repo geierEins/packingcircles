@@ -53,10 +53,10 @@ void mouseClicked() {
     speedupButton.hide();
     slowdownButton.hide();
     spawnNButton.hide();
-    
+
     draw();
     screenshotHelper.shot();
-    
+
     saveButton.retrieve();
     resetButton.retrieve();
     speedupButton.retrieve();
@@ -83,4 +83,5 @@ void mouseClicked() {
       println("spawnEveryNframes: " + spawnEveryNframes);
     }
   }
+  pc.spawnParticleWithGivenXYifValid(mouseX, mouseY);
 }

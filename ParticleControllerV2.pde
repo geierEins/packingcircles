@@ -1,4 +1,4 @@
-class ParticleController { //<>//
+class ParticleController { //<>// //<>// //<>//
 
   ArrayList<Particle> particles;
   PVector outterCircle, nextCandidate;
@@ -17,11 +17,11 @@ class ParticleController { //<>//
     PVector nextCandidate;
     while (foundCandidate==false) {
       nextCandidate = new PVector((int)random(0, width), (int)random(0, height));
-      
+
       // first condidtion: be spawned inside of outter circle
       if ((sq(nextCandidate.x-outterCircle.x)+sq(nextCandidate.y-outterCircle.y)) <= sq(outterCircleRadius)) {
         if (particles.size()==0) {
-          foundCandidate = true; //<>//
+          foundCandidate = true;
           particles.add(new Particle(nextCandidate, outterCircle));
         }
         if (foundCandidate) break;
@@ -29,7 +29,7 @@ class ParticleController { //<>//
         // second condition: be spawned otside of other particle/circle
         if (particles.size()>0) {
           for (Particle pToCheck : particles) {
-            if (sq(nextCandidate.x-pToCheck.centerVector.x)+sq(nextCandidate.y-pToCheck.centerVector.y) > sq(pToCheck.radius)) { //<>//
+            if (sq(nextCandidate.x-pToCheck.centerVector.x)+sq(nextCandidate.y-pToCheck.centerVector.y) > sq(pToCheck.radius)) {
               foundCandidate = true;
               particles.add(new Particle(nextCandidate, outterCircle));
               println("added a new particle to particles. size is now: " + particles.size());
@@ -38,6 +38,34 @@ class ParticleController { //<>//
           }
         }
       }
+    }
+  }
+
+  void spawnParticleWithGivenXYifValid(int x, int y) {
+    boolean foundCandidate = false;
+    PVector nextCandidate;
+    nextCandidate = new PVector(x, y);
+
+    // first condidtion: be spawned inside of outter circle
+    if ((sq(nextCandidate.x-outterCircle.x)+sq(nextCandidate.y-outterCircle.y)) <= sq(outterCircleRadius)) {
+      if (particles.size()==0) {
+        foundCandidate = true;
+        particles.add(new Particle(nextCandidate, outterCircle));
+      }
+
+      // second condition: be spawned otside of other particle/circle
+      if (particles.size()>0) {
+        for (Particle pToCheck : particles) {
+          if (sq(nextCandidate.x-pToCheck.centerVector.x)+sq(nextCandidate.y-pToCheck.centerVector.y) > sq(pToCheck.radius)) {
+            foundCandidate = true;
+            particles.add(new Particle(nextCandidate, outterCircle));
+            println("added a new particle to particles. size is now: " + particles.size());
+          }
+          if (foundCandidate) break;
+        }
+      }
+    } else if(foundCandidate==false){
+      println("Couldn't create new Particle at given X & Y!");
     }
   }
 

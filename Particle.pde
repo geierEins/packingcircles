@@ -11,7 +11,8 @@ class Particle {
     this.centerVector = centerVector;
     this.pSize = 0;
     this.radius = pSize/2;
-    this.radiusMax = random(200, 200);
+    //this.radiusMax = 200;
+    this.radiusMax = setRadiusMaxByDistToCenter();
     this.isCollidedWithOtherParticle = false;  
     this.particleGrowthRate = 0.1;
     
@@ -21,8 +22,8 @@ class Particle {
   void applyDefaultAppearanceProperties() {
     /* FILL */
     //setColor(255, 255, 255);
-    //setColorRandom();
-    setColorGradient1();
+    setColorRandom();
+    //setColorGradient1();
     setAlpha(200);
     
     /* STROKE */
@@ -52,6 +53,10 @@ class Particle {
     }
   }
   
+  float setRadiusMaxByDistToCenter(){
+    return map(PVector.dist(this.centerVector, this.outterCircle), 0, width/2, 50, 2);
+  }
+  
   void updateProperties(){
     pColRed = (int)map(this.radius, 0, 100, 0, 255);
     pColGreen = pColRed;
@@ -71,7 +76,7 @@ class Particle {
     this.pSize = pSize;
     this.radius = pSize/2;
   }
-
+  
   void setPSizeRandom() {
     this.pSize = (int)random(5, 50);
     this.radius = pSize/2;
@@ -87,7 +92,6 @@ class Particle {
     pColRed = (int)map(this.centerVector.x-outterCircle.x, 0, width/2, 255, 0);
     pColGreen = (int)map(this.centerVector.x-outterCircle.x, -width/2, 0, 0, 255);
     pColBlue = (int)map(this.centerVector.y-outterCircle.y, -width/2, width/2, 255, 0);
-    
   }
 
   void setColorRandom() {

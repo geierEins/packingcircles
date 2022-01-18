@@ -3,7 +3,7 @@ class ScreenshotHelper{
   String format = ".png";
   
   void shot(){
-    save(dateAsFilename() + format);
+    save("screenshots/"+dateAsFilename() + format);
   }
   
   String dateAsFilename(){
